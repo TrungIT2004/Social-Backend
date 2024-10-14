@@ -2,6 +2,7 @@ import app from "./express-app"
 import pool from "./database/connection"
 import { env } from "./configs/config"
 import router from "./api/routes/userRoutes"
+import postRouter from "./api/routes/post-route"
 
 const startServer = () => {
     pool.connect()
@@ -18,5 +19,6 @@ const startServer = () => {
 
 // Routes
 app.use('/v1/users', router)
+app.use('/v1/posts', postRouter)
 
 startServer()

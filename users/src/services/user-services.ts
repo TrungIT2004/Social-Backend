@@ -1,4 +1,4 @@
-import { UserRepository } from "../database/repository/userRepository"
+import { UserRepository } from "../database/repository/user-repository"
 import { checkPassword, hashPassword, createToken } from "../utils"
 import { v4 as uuidv4 } from 'uuid'
 import { env } from "../configs/config"
@@ -7,6 +7,7 @@ interface Tokens {
     accessToken: string;
     refreshToken: string;
 }
+
 
 export class UserService {
     UserRepository: any

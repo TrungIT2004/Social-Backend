@@ -17,6 +17,10 @@ interface EnvConfig {
     PG_PORT?: number;
     SECRET_ACCESS: string;
     SECRET_REFRESH: string;
+    ACCOUNT_ID?: string;
+    BUCKET_NAME?: string;
+    ACCESS_KEY_ID?: string;
+    SECRET_ACCESS_KEY?: string;
 }
 
 export const env: EnvConfig = {
@@ -27,5 +31,9 @@ export const env: EnvConfig = {
     PG_PASSWORD: process.env.PG_PASSWORD,
     PG_PORT: process.env.PG_PORT ? parseInt(process.env.PG_PORT, 10) : undefined,
     SECRET_ACCESS: process.env.SECRET_ACCESS!,
-    SECRET_REFRESH: process.env.SECRET_REFRESH!
-};
+    SECRET_REFRESH: process.env.SECRET_REFRESH!,
+    ACCOUNT_ID: process.env.ACCOUNT_ID,
+    BUCKET_NAME: process.env.BUCKET_NAME,
+    ACCESS_KEY_ID: process.env.ACCESS_KEY_ID,
+    SECRET_ACCESS_KEY: process.env.SECRET_ACCESS_KEY,
+}
