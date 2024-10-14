@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import sharp from 'sharp'
 import { s3Client } from '../configs/R2Config'
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { env } from '../configs/config'
 import { Buffer } from 'buffer'
 

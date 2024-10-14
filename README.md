@@ -1,2 +1,2 @@
 # Social Backend
- A microservices architecture of a social app
+ A monolith architecture of a social app
