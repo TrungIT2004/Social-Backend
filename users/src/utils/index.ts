@@ -10,6 +10,7 @@ import { Buffer } from 'buffer'
 interface Payload {
     email: string
     password: string
+    userid: string
     iat: number
 }
 
@@ -24,8 +25,8 @@ export const checkPassword = async (inputPassword: string, accountPassword: stri
     return result
 }
 
-export const createToken = (email: string, password: string, secret: string):string => {
-    const token = jwt.sign({email, password}, secret)
+export const createToken = (email: string, password: string, userid: string, secret: string):string => {
+    const token = jwt.sign({email, password, userid}, secret)
     return token
 }
 

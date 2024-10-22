@@ -48,7 +48,7 @@ export const refresh = async (req: Request, res: Response) => {
             if (!payload.email && payload.password) {
                 res.status(400).json({"msg": "Please Sign In Again"})
             } else {
-                const newAccessToken = createToken(payload.email, payload.password, env.SECRET_ACCESS)
+                const newAccessToken = createToken(payload.email, payload.password, payload.userid, env.SECRET_ACCESS)
                 res.status(200).json(newAccessToken)
             }
         } catch(err) {

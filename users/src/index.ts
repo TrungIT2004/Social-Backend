@@ -3,6 +3,7 @@ import pool from "./database/connection"
 import { env } from "./configs/config"
 import router from "./api/routes/userRoutes"
 import postRouter from "./api/routes/post-route"
+import { authorizeToken } from "./api/middlewares"
 
 const startServer = () => {
     pool.connect()
@@ -19,6 +20,10 @@ const startServer = () => {
 
 // Routes
 app.use('/v1/users', router)
+
+app.use(authorizeToken)
 app.use('/v1/posts', postRouter)
 
 startServer()
+
+

@@ -40,8 +40,8 @@ export class UserService {
                 const validatePassword = await checkPassword(password, userExist.password_hash)
 
                 if (validatePassword) {
-                    const accessToken = createToken(email, password, env.SECRET_ACCESS)
-                    const refreshToken = createToken(email, password, env.SECRET_REFRESH)
+                    const accessToken = createToken(email, password, userExist.userid, env.SECRET_ACCESS)
+                    const refreshToken = createToken(email, password, userExist.userid, env.SECRET_REFRESH)
                     return {accessToken, refreshToken} as Tokens
                 }
 

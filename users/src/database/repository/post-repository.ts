@@ -1,7 +1,7 @@
 import pool from "../connection"
 import { v4 as uuidv4 } from 'uuid'
 
-interface Post {
+export interface Post {
     postid: string;
     userid: string;
     description: string;
@@ -10,13 +10,13 @@ interface Post {
 }
 
 export class PostRepository {
-    getPosts = async (): Promise<Post[]> => {
+    selectPosts = async (): Promise<Post[]> => {
         const posts = await pool.query(`SELECT * FROM posts`)
         return posts.rows
     }
 
-    getOnePost = async (postid: string): Promise<Post> => {
-        const text = `SELECT * FROM posts WHERE postid=$1`
+    selectOnePost = async (postid: string): Promise<Post> => {
+        const text = `SELECT * FROM posts WHERE postid= $1`
         const value = [postid]
         const post = await pool.query(text,value)
         return post.rows[0]
