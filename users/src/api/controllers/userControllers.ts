@@ -31,7 +31,7 @@ export const signIn = async (req: Request, res: Response) => {
         if (result === 2) res.status(401).json({"msg": "Password incorrect"})
         if (typeof result === "object") {
             res.cookie('refreshToken', result.refreshToken, { secure: false, httpOnly: false })
-            res.status(200).json(result.accessToken)
+            res.status(200).json({accessToken: result.accessToken, userid: result.userid})
         }
     } catch(err) {
             res.status(500).json(err)
@@ -49,7 +49,7 @@ export const refresh = async (req: Request, res: Response) => {
                 res.status(400).json({"msg": "Please Sign In Again"})
             } else {
                 const newAccessToken = createToken(payload.email, payload.password, payload.userid, env.SECRET_ACCESS)
-                res.status(200).json(newAccessToken)
+                res.status(200).json({accessToken: newAccessToken, userid: payload.userid})
             }
         } catch(err) {
             res.status(500).json(err)

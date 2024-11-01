@@ -8,7 +8,9 @@ const postService = new PostService()
 
 export const uploadPost = async (req: Request, res: Response) => {
     const { userid, description } = req.body
+    console.log(req.body)
     const media = req.files 
+    console.log(media)
 
     try {
         const newPost = await postService.uploadPost(userid, description, media)

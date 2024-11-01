@@ -44,25 +44,29 @@ export interface Media {
     buffer: Buffer;
 }
 
-export const processingImages = async (media: Media[]) => {
+export const processingMedias = async (media: Media[]) => {
     const processedImages = await Promise.all(
         media.map(async (media: Media) => {
-            try {
+            const uploadParams = {
+                Bucket: env.BUCKET_NAME,
+                Key: media.originalname,
+                Body: media.buffer,
+                ContentType: media.mimetype,
+            }
+
+        try {
+            if (media.mimetype.startsWith('image')) {
                 const newBuffer = await sharp(media.buffer)
                     .resize({ width: 300, height: 300 })
                     .webp({ quality: 80 })
                     .toBuffer()
 
-                const uploadParams = {
-                    Bucket: env.BUCKET_NAME,
-                    Key: media.originalname,
-                    Body: newBuffer,
-                    ContentType: 'image/webp',
-                }
+                uploadParams.ContentType = 'image/webp'
+                uploadParams.Body = newBuffer
+            }
+            await s3Client.send(new PutObjectCommand(uploadParams))
 
-                await s3Client.send(new PutObjectCommand(uploadParams))
-
-                return `https://pub-f3dcaf5aed7942b3aeb248bdc4665f56.r2.dev/${media.originalname}`
+            return `https://pub-f3dcaf5aed7942b3aeb248bdc4665f56.r2.dev/${media.originalname}`
         } catch (error) {
             console.error('Error processing image:', error)
             return null 

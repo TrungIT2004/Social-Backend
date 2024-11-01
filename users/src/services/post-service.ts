@@ -1,5 +1,5 @@
 import { Post, PostRepository } from "../database/repository/post-repository"
-import { Media, processingImages } from "../utils"
+import { Media, processingMedias } from "../utils"
 
 export class PostService {
     PostRepository: any 
@@ -30,7 +30,7 @@ export class PostService {
     }
 
     uploadPost = async (userid: string, description: string, media: any): Promise<Post | undefined> => {
-        const processedImages = await processingImages(media)
+        const processedImages = await processingMedias(media)
 
         try {
             const newPost = await this.PostRepository.createPost(userid, description, processedImages)

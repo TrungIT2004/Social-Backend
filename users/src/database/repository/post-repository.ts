@@ -11,7 +11,18 @@ export interface Post {
 
 export class PostRepository {
     selectPosts = async (): Promise<Post[]> => {
-        const posts = await pool.query(`SELECT * FROM posts`)
+        const text = `select posts.postid, posts.userid, posts.description, posts.media, posts.created_at, post_reactions.count as reaction_count, comments.count as comment_count, comments from posts
+                    join (select count(reaction), postid from post_reactions group by postid) as post_reactions on posts.postid = post_reactions.postid
+                    join (select postid, count(content), json_agg(
+	                    json_build_object(
+		                    'content', comments.content,
+		                    'created_at', comments.created_at
+	                    )
+                    ) as comments
+                    from comments
+                    group by comments.postid) as comments on posts.postid = comments.postid`
+
+        const posts = await pool.query(text)
         return posts.rows
     }
 

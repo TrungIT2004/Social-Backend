@@ -8,9 +8,7 @@ export const authorizeToken = async (req: any, res: Response, next: any) => {
         const token = authHeader.split(' ')[1]
         const payload = verifyToken(token, env.SECRET_ACCESS)
 
-        if (payload.email && payload.password) {
-            req.body.userid = payload.userid
-            console.log(payload)
+        if (payload.email && payload.password && payload.userid && payload.userid === req.headers['x-user-id']) {
             next()
         } else {
             res.status(401).json("Wrong credentials. Please login again.")

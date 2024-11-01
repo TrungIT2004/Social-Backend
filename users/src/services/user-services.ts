@@ -6,6 +6,7 @@ import { env } from "../configs/config"
 interface Tokens {
     accessToken: string;
     refreshToken: string;
+    userid: string;
 }
 
 
@@ -42,7 +43,7 @@ export class UserService {
                 if (validatePassword) {
                     const accessToken = createToken(email, password, userExist.userid, env.SECRET_ACCESS)
                     const refreshToken = createToken(email, password, userExist.userid, env.SECRET_REFRESH)
-                    return {accessToken, refreshToken} as Tokens
+                    return { accessToken, refreshToken, userid: userExist.userid } as Tokens
                 }
 
                 return 2
