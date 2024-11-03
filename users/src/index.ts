@@ -1,5 +1,6 @@
 import app from "./express-app"
 import pool from "./database/connection"
+import connectToMongoDB from "./database/mongodb-connection"
 import { env } from "./configs/config"
 import router from "./api/routes/userRoutes"
 import postRouter from "./api/routes/post-route"
@@ -10,6 +11,9 @@ import commentReactionRouter from "./api/routes/commentReaction-route"
 
 const startServer = () => {
     pool.connect()
+        .then( async () => {
+            await connectToMongoDB()
+        })
         .then( () => {
             console.log('Connected to PG')
             app.listen(env.PORT, () => {

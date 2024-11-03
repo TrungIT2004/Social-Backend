@@ -71,3 +71,15 @@ export const signOut = async (req: Request, res: Response) => {
         }
     }
 }
+
+export const sendFriendRequest = async (req: Request, res: Response) => {
+    const { senderid, senderName, receiverid, receiverName } = req.body
+    
+    try {
+        const newFriendRequest = await userService.sendFriendRequest(senderid, senderName, receiverid, receiverName)
+        res.status(200).json(newFriendRequest)
+    } catch(err) {
+        res.status(500).json(err)
+    }
+}
+

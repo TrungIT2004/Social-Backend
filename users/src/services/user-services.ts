@@ -54,4 +54,25 @@ export class UserService {
 
         return 1
     }
+
+    sendFriendRequest = async (senderid: string, senderName: string, receiverid: string, receiverName: string) => {
+        try {
+            const newFriendRequest = await UserRepository.createFriendRequest(senderid, senderName, receiverid, receiverName)
+            return newFriendRequest
+        } catch(err) {
+            console.log(err)
+            return 
+        }
+    }
+
+    acceptFriendRequest = async (requestid: string, senderid: string, receiverid: string) => {
+        try {
+            const addFriend = await UserRepository.addFriend(senderid, receiverid)
+            UserRepository.deleteFriendRequest(requestid)
+            return addFriend
+        } catch(err) {
+            console.log(err)
+            return 
+        }
+    }
 }
